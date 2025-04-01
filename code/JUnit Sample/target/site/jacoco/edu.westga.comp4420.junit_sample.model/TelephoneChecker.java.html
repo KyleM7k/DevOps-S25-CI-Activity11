@@ -13,14 +13,14 @@
 	 * 			false	if number is not a valid phone number
 	 */
 	public boolean verifyNumber(long number) {
-<span class="pc bpc" id="L16" title="1 of 2 branches missed.">		if (number &lt; 1000000L) {</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">		if (number &lt; 1000000L) {</span>
 <span class="fc" id="L17">			return false;</span>
-<span class="nc bnc" id="L18" title="All 2 branches missed.">		} else if (number &lt; 9999999L) {</span>
-<span class="nc" id="L19">			return false;</span>
-<span class="nc bnc" id="L20" title="All 2 branches missed.">		} else if (number &lt; 1000000000L) {</span>
-<span class="nc" id="L21">			return false;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		} else if (number &lt;= 9999999L) {</span>
+<span class="fc" id="L19">			return true;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">		} else if (number &lt; 1000000000L) {</span>
+<span class="fc" id="L21">			return false;</span>
 		} else {
-<span class="nc bnc" id="L23" title="All 2 branches missed.">			return number &lt; 9999999999L;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">			return number &lt;= 9999999999L;</span>
 		} 
 	}
 	
@@ -42,7 +42,19 @@
 	 * 			false	if number does not match heuristics for potential spam
 	 */
 	public boolean identifySpam(long number) {
-<span class="nc" id="L45">		return false;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (!this.verifyNumber(number)) {</span>
+<span class="fc" id="L46">			throw new IllegalArgumentException(&quot;Phone number is not valid.&quot;);</span>
+		}
+<span class="fc" id="L48">		long tempNum = (number / 10000000);</span>
+<span class="fc" id="L49">		long[] bannedAreaCodes = {999L, 900L, 888L, 800L, 911L, 411L};</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		for (int i = 0; i &lt; bannedAreaCodes.length; i++) {</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (tempNum == bannedAreaCodes[i]) {</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">				return tempNum == bannedAreaCodes[i];</span>
+			} else {
+				continue;
+			}
+		}
+<span class="fc" id="L57">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
